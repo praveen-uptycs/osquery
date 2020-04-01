@@ -6,7 +6,10 @@
 
 function(libPcapMain)
 
-  #execute_process(COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/src/configure")
+  execute_process(COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/src/configure" OUTPUT_QUIET)
+  execute_process(COMMAND make
+                  WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/" OUTPUT_QUIET)
+
   set(library_root "${CMAKE_CURRENT_SOURCE_DIR}/src")
   add_library(thirdparty_libpcap
 	"${library_root}/bpf_dump.c"
@@ -43,7 +46,7 @@ function(libPcapMain)
 	#"${library_root}/pcap-septel.c"     
 	#"${library_root}/pcap-snoop.c"  
 	"${library_root}/savefile.c"        
-	"${library_root}/sslutils.c"
+	#"${library_root}/sslutils.c"
 	#"${library_root}/dlpisubs.c"    
 	#"${library_root}/fad-glifc.c"  
 	"${library_root}/optimize.c"    
@@ -69,10 +72,12 @@ function(libPcapMain)
     PACKAGE=\"libpcap\"
     VERSION=\"1.9.1\" 
     HAVE_STRLCPY
-    HAVE_SOCKLEN_T
   )
   target_include_directories(thirdparty_libpcap PUBLIC
      $<1:${library_root}>
+  )
+  target_compile_options(thirdparty_libpcap PRIVATE
+    -include "${CMAKE_CURRENT_SOURCE_DIR}/config/linux/config.h"
   )
 
 endfunction()

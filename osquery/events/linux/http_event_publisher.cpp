@@ -342,7 +342,7 @@ struct sniff_ethernet {
      const struct sniff_tcp *tcp;            /* The TCP header */
      const u_char *payload;                  /* Packet payload */
      
-     //HTTP header
+     //HTTP headers
      std::string method = "";
      std::string protocol = "";
      std::string host = "";
