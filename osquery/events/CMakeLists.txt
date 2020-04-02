@@ -18,6 +18,7 @@ function(generateOsqueryEvents)
 
   if(DEFINED PLATFORM_LINUX)
     list(APPEND source_files
+      audit_flags.cpp
       linux/auditdnetlink.cpp
       linux/auditeventpublisher.cpp
       linux/inotify.cpp
@@ -28,6 +29,7 @@ function(generateOsqueryEvents)
 
   elseif(DEFINED PLATFORM_MACOS)
     list(APPEND source_files
+      audit_flags.cpp
       darwin/diskarbitration.cpp
       darwin/event_taps.cpp
       darwin/fsevents.cpp
