@@ -13,6 +13,7 @@ function(osqueryEventsTestsMain)
     generateOsqueryEventsTestsAudittestsTest()
     generateOsqueryEventsTestsProcessfileeventstestsTest()
     generateOsqueryEventsTestsInotifytestsTest()
+    generateOsqueryEventsTestsHTTPEventsTest()
   endif()
 
   if(DEFINED PLATFORM_MACOS)
@@ -86,6 +87,26 @@ function(generateOsqueryEventsTestsSyslogtestsTest)
     plugins_database_ephemeral
     specs_tables
     thirdparty_googletest
+  )
+endfunction()
+function(generateOsqueryEventsTestsHTTPEventsTest)
+  add_osquery_executable(osquery_events_tests_httpeventstests-test linux/http_events_tests.cpp)
+  target_link_libraries(osquery_events_tests_httpeventstests-test PRIVATE
+    osquery_cxx_settings
+    osquery_config_tests_testutils
+    osquery_core
+    osquery_core_sql
+    osquery_database
+    osquery_events
+    osquery_filesystem
+    osquery_remote_tests_remotetestutils
+    osquery_tables_system_systemtable
+    osquery_utils
+    osquery_utils_conversions
+    plugins_database_ephemeral
+    specs_tables
+    thirdparty_googletest
+    tests_integration_tables_integrationtestshelper
   )
 endfunction()
 
