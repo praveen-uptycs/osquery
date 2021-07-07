@@ -24,6 +24,7 @@ function(generateOsqueryEvents)
       linux/inotify.cpp
       linux/syslog.cpp
       linux/udev.cpp
+      linux/http_event_publisher.cpp
     )
 
   elseif(DEFINED PLATFORM_MACOS)
@@ -65,18 +66,25 @@ function(generateOsqueryEvents)
     thirdparty_boost
   )
 
+  set(dependencies
+    thirdparty_libpcap
+    osquery_core
+    osquery_headers
+  )
+
   if(DEFINED PLATFORM_LINUX)
     target_link_libraries(osquery_events PUBLIC
+      osquery_headers
       thirdparty_libaudit
       thirdparty_libudev
       thirdparty_util-linux
+      thirdparty_libpcap
     )
   endif()
-
+ 
   set(public_header_files
     pathset.h
   )
-
   generateIncludeNamespace(osquery_events "osquery/events" "FILE_ONLY" ${public_header_files})
 
   if(DEFINED PLATFORM_LINUX)
@@ -90,6 +98,7 @@ function(generateOsqueryEvents)
       linux/socket_events.h
       linux/syslog.h
       linux/udev.h
+      linux/http_event_publisher.h
     )
 
   elseif(DEFINED PLATFORM_MACOS)
